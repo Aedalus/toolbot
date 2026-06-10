@@ -1,14 +1,16 @@
 # Technical Design
 
-Use one TypeScript backend service for both the Slack bot and public API. The backend is the source of truth for reservations; clients should not implement scheduling rules.
+One TypeScript backend service should support both the Slack bot and public API. The backend is the source of truth for reservations; clients should not implement scheduling rules.
 
-Typescript was chosen as there is a well supported official Slack SDK, while also easily supporting necessary frontend requirements.
+TypeScript is preferred because Slack has a well-supported official SDK and the same stack can support frontend needs.
 
 ## Architecture
 
-- TypeScript service handles Slack interactions, reservation writes, admin actions, and public read endpoints.
-- PostgreSQL stores tools, users, reservations, and audit events.
-- Public website reads availability from the same service.
+| Component | Responsibility |
+| --- | --- |
+| TypeScript service | Slack interactions, reservation writes, admin actions, public read endpoints |
+| PostgreSQL | Tools, users, reservations, audit events |
+| Public website | Read-only availability display backed by the service |
 
 ## Data Structures
 
@@ -16,55 +18,49 @@ Typescript was chosen as there is a well supported official Slack SDK, while als
 
 Reservable makerspace equipment.
 
-```text
-id
-name
-slug
-description
-enabled
-advance_booking_window_minutes, default 120
-min_duration_minutes
-max_duration_minutes
-slot_granularity_minutes, default 15
-```
-
-- `slug` is for public URLs.
-- `enabled=false` prevents new reservations.
-- Booking window, duration limits, and slot granularity are per tool.
+| Field | Notes |
+| --- | --- |
+| `id` | Internal identifier |
+| `name` | Display name |
+| `slug` | Public URL identifier |
+| `description` | Short tool description |
+| `enabled` | Disabled tools cannot receive new reservations |
+| `advance_booking_window_minutes` | Default `120` |
+| `min_duration_minutes` | Per-tool minimum |
+| `max_duration_minutes` | Per-tool maximum |
+| `slot_granularity_minutes` | Default `15` |
 
 ### users
 
-Local user records linked to Slack identities.
+Local records linked to Slack identities.
 
-```text
-id
-slack_user_id
-display_name
-role: member | admin
-```
-
-- Slack is the identity source.
-- Local users store app-specific roles and stable historical references.
+| Field | Notes |
+| --- | --- |
+| `id` | Internal identifier |
+| `slack_user_id` | Slack identity |
+| `display_name` | Snapshot for UI/history |
+| `role` | `member` or `admin` |
 
 ### reservations
 
 Time-bounded bookings for one user and one tool.
 
-```text
-id
-tool_id
-user_id
-starts_at
-ends_at
-status: active | canceled
-notes
-created_via: slack | admin
-canceled_at
-canceled_by_user_id
-```
+| Field | Notes |
+| --- | --- |
+| `id` | Internal identifier |
+| `tool_id` | Reserved tool |
+| `user_id` | Reserving user |
+| `starts_at` | Stored in UTC |
+| `ends_at` | Stored in UTC |
+| `status` | `active` or `canceled` |
+| `notes` | Optional member/admin note |
+| `created_via` | `slack` or `admin` |
+| `canceled_at` | Set when canceled |
+| `canceled_by_user_id` | User who canceled it |
 
-- Store times in UTC.
-- Display times in the makerspace timezone.
+Rules:
+
+- Display reservation times in the makerspace timezone.
 - Active reservations must not overlap for the same tool.
 - Start and end times must align to the tool's slot granularity.
 - Canceled and past reservations stay in history.
@@ -73,21 +69,17 @@ canceled_by_user_id
 
 History of meaningful user or admin actions.
 
-```text
-id
-actor_user_id
-action
-entity_type
-entity_id
-metadata
-created_at
-```
+| Field | Notes |
+| --- | --- |
+| `id` | Internal identifier |
+| `actor_user_id` | User who performed the action |
+| `action` | Event name |
+| `entity_type` | Affected object type |
+| `entity_id` | Affected object ID |
+| `metadata` | Extra structured context |
+| `created_at` | Event timestamp |
 
-- `reservation_created`
-- `reservation_canceled`
-- `tool_disabled`
-- `tool_enabled`
-- `admin_promoted`
+Initial actions: `reservation_created`, `reservation_canceled`, `tool_disabled`, `tool_enabled`, `admin_promoted`.
 
 ## System Rules
 

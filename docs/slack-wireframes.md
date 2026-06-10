@@ -4,6 +4,21 @@
 
 These wireframes show what the Slack scheduling experience could feel like for members and admins. They are not final copy or visual design; they are examples of screens, choices, and message flow.
 
+## Contents
+
+| Flow | Description |
+| --- | --- |
+| [Flow 1](#flow-1-check-tool-availability) | Check tool availability |
+| [Flow 2](#flow-2-view-one-tool-availability) | View availability ranges for one tool |
+| [Flow 3](#flow-3-create-reservation) | Create a reservation |
+| [Flow 4](#flow-4-view-my-reservations) | View upcoming reservations |
+| [Flow 5](#flow-5-cancel-reservation) | Cancel a reservation |
+| [Flow 6](#flow-6-admin-tool-availability) | Disable or enable a tool |
+| [Flow 7](#flow-7-add-a-new-tool) | Add a new tool |
+| [Flow 8](#flow-8-edit-a-tool) | Edit a tool |
+| [Flow 9](#flow-9-promote-another-admin) | Promote another admin |
+| [Flow 10](#flow-10-daily-schedule-summary) | Daily schedule summary |
+
 ## Flow 1: Check Tool Availability
 
 Member types:

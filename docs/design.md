@@ -1,53 +1,53 @@
 # Product Requirements
 
-This project is a makerspace scheduling system. Baseline scheduling behavior is assumed: members can book available tool time, view their own upcoming reservations, cancel future reservations, and cannot double-book the same tool. Admins can resolve exceptions. Public visitors can view availability but cannot make changes.
+Makerspace tool scheduling with Slack-based writes and a public read-only availability site.
 
-## Product Decisions
+Baseline scheduling is assumed: members can reserve available tool time, view their reservations, cancel future reservations, and cannot double-book a tool.
 
-### Slack Is the Write Interface
+## Key Decisions
 
-Members and admins should manage scheduling from Slack rather than a dedicated logged-in web app. Slack flows should cover reservation creation, cancellation, personal reservation lookup, tool availability changes, and admin promotion.
+| Area | Decision |
+| --- | --- |
+| Write interface | Slack is the primary interface for members and admins. |
+| Public website | Read-only availability display; no sign-in required. |
+| Time granularity | Reservations use 15-minute start times, end times, and durations. |
+| Tool settings | Booking window, duration limits, and enabled state are configured per tool. |
+| Default booking window | 2 hours. |
+| Public privacy | Reservation blocks default to `Reserved`, not member names. |
+| Admin access | Admins can promote other admins. |
 
-Detailed Slack examples are in `docs/slack-wireframes.md`.
+## Required Slack Flows
 
-### Public Website Is Read-Only
+Detailed examples are in [Slack wireframes](slack-wireframes.md).
 
-The website exists for quick availability checks. It should show current and upcoming tool availability without requiring sign-in.
+- Check tool availability.
+- Create a reservation.
+- View my reservations.
+- Cancel a reservation.
+- Add or edit tools.
+- Disable or enable tools.
+- Promote another admin.
 
-Public reservation blocks should default to `Reserved`, not member names, unless the makerspace later chooses otherwise.
+## Admin Capabilities
 
-### Tool Scheduling Rules
+- Add and edit tool definitions.
+- Disable or enable tools.
+- Cancel or adjust reservations.
+- Promote other admins.
 
-All reservation start times, end times, and durations use 15-minute increments.
+## Notifications
 
-Each tool may define its own:
+Required:
 
-- advance booking window;
-- minimum reservation duration;
-- maximum reservation duration;
-- enabled or disabled state.
+- Confirm reservation creation in Slack.
+- Confirm reservation cancellation in Slack.
 
-The default advance booking window is 2 hours.
+Nice to have:
 
-### Admin Model
-
-Admins can:
-
-- disable or enable tools;
-- cancel or adjust reservations;
-- promote other admins.
-
-### Notifications
-
-Slack should confirm reservation creation and cancellation.
-
-A daily Slack schedule summary is optional.
-
-## Nice To Have
-
-- Slack reminders before upcoming reservations.
-- Calendar invites or calendar feeds for reservations.
-- Member notifications when admin actions affect existing reservations.
+- Remind members before upcoming reservations.
+- Send calendar invites or expose calendar feeds.
+- Notify members when admin actions affect existing reservations.
+- Post a daily Slack schedule summary.
 
 ## Open Questions
 
