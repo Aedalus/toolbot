@@ -9,6 +9,7 @@ Baseline scheduling is assumed: members can reserve available tool time, view th
 | Area | Decision |
 | --- | --- |
 | Write interface | Slack is the primary interface for members and admins. |
+| Slack channel | Scheduling should primarily happen in `#reservations`. |
 | Public website | Read-only availability display; no sign-in required. |
 | Time granularity | Reservations use 15-minute start times, end times, and durations. |
 | Tool settings | Booking window, duration limits, and enabled state are configured per tool. |
@@ -47,7 +48,6 @@ Nice to have:
 - Remind members before upcoming reservations.
 - Send calendar invites or expose calendar feeds.
 - Notify members when admin actions affect existing reservations.
-- Post a daily Slack schedule summary.
 
 ## Open Questions
 

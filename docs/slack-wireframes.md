@@ -4,6 +4,8 @@
 
 These wireframes show what the Slack scheduling experience could feel like for members and admins. They are not final copy or visual design; they are examples of screens, choices, and message flow.
 
+Most scheduling interactions are expected to start from the `#reservations` Slack channel.
+
 ## Contents
 
 | Flow | Description |
@@ -17,7 +19,6 @@ These wireframes show what the Slack scheduling experience could feel like for m
 | [Flow 7](#flow-7-add-a-new-tool) | Add a new tool |
 | [Flow 8](#flow-8-edit-a-tool) | Edit a tool |
 | [Flow 9](#flow-9-promote-another-admin) | Promote another admin |
-| [Flow 10](#flow-10-daily-schedule-summary) | Daily schedule summary |
 
 ## Flow 1: Check Tool Availability
 
@@ -423,29 +424,6 @@ The newly promoted admin receives a direct message:
 +------------------------------------------------------------+
 ```
 
-## Flow 10: Daily Schedule Summary
-
-Optional scheduled Slack post:
-
-```text
-+------------------------------------------------------------+
-| Today's Tool Schedule                                      |
-|                                                            |
-| Laser Cutter                                               |
-| 10:00 AM-12:15 PM                                          |
-| 1:30 PM-3:45 PM                                            |
-| 4:15 PM-6:00 PM                                            |
-|                                                            |
-| CNC Router                                                 |
-| 1:00 PM-5:00 PM                                            |
-|                                                            |
-| 3D Printer                                                 |
-| Unavailable                                                |
-|                                                            |
-| [View calendar]                                            |
-+------------------------------------------------------------+
-```
-
 ## Notes
 
 - Recommended command entry points:
@@ -453,6 +431,7 @@ Optional scheduled Slack post:
   - `/tools reserve`
   - `/tools mine`
   - `/tools admin`
+- Most scheduling interactions should happen in `#reservations`.
 - Slack interactions may use slash commands, buttons, and modals.
 - Slack requests should be verified before the system processes them.
 - Slack interactions should respond quickly. If an action takes longer, acknowledge it first and send a follow-up message.
