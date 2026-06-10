@@ -1,4 +1,4 @@
-# Scheduling
+# Toolbot
 
 A makerspace tool scheduling project with Slack-based reservations and a public read-only availability website.
 
