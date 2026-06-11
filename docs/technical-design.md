@@ -1,15 +1,15 @@
 # Technical Design
 
-One TypeScript backend service should support both the Slack bot and public API. The backend is the source of truth for reservations; clients should not implement scheduling rules.
+One Python service should support both the Slack bot and public API. The backend is the source of truth for reservations; clients should not implement scheduling rules.
 
-TypeScript is preferred because Slack has a well-supported official SDK and the same stack can support frontend needs.
+Python is preferred due to its historical use at the makerspace.
 
 ## Architecture
 
 | Component | Responsibility |
 | --- | --- |
-| TypeScript service | Slack interactions, reservation writes, admin actions, public read endpoints |
-| PostgreSQL | Tools, users, reservations, audit events |
+| Python Flask service | Slack interactions, reservation writes, admin actions, public read endpoints |
+| MariaDB | Tools, users, reservations, audit events |
 | Public website | Read-only availability display backed by the service |
 
 ## Data Structures

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Toolbot{% endblock %}</title>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        <nav aria-label="Primary navigation">
+            <a href="{{ url_for('index') }}">Toolbot</a>
+        </nav>
+    </header>
+
+    <main>
+        {% include "components/_flash_messages.html" %}
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "components/_footer.html" %}
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
