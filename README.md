@@ -7,6 +7,8 @@ A makerspace tool scheduling service with Slack-based reservations and a public 
 ```bash
 cp .env.example .env
 make docker-up
+make migrate
+make seed
 make routes
 make open-local
 ```
@@ -43,6 +45,23 @@ The Docker app service sets `SLACK_SOCKET_MODE_CONNECT=true`, so Slack Socket Mo
 ## Make Commands
 
 Run `make` to see the available development commands.
+
+Database schema changes are managed with Flask-Migrate/Alembic:
+
+```bash
+make migrate
+```
+
+`make migrate` runs against the Docker Compose app and MariaDB services. To create a new revision, run
+`docker compose exec app flask --app toolbot:create_app db migrate -m "describe change"`.
+
+Local starter data is managed with a Flask CLI command:
+
+```bash
+make seed
+```
+
+This creates or updates the starter tool records for Bronte, Glowforge, and Wood Lathes.
 
 ## Architecture
 

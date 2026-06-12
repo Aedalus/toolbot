@@ -5,6 +5,7 @@ description = "Makerspace tool scheduling service with Slack reservations"
 requires-python = ">=3.12"
 dependencies = [
     "Flask>=3.1.2",
+    "Flask-Migrate>=4.1.0",
     "Flask-SQLAlchemy>=3.1.1",
     "PyMySQL>=1.1.1",
     "python-dotenv>=1.1.0",
@@ -24,3 +25,6 @@ testpaths = ["tests"]
 [tool.ruff]
 target-version = "py312"
 line-length = 120
+
+[tool.setuptools.packages.find]
+include = ["toolbot*"]
