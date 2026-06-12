@@ -4,7 +4,7 @@ High-level feature tickets for fanning out Toolbot implementation work. Each ite
 
 ## 1. Slack Member Reservations
 
-- [ ] Build the `/tools` Slack home flow so members can see reservable tools, current availability, and actions from Slack.
+- [ ] Build the `@bot reserve` Slack mention flow so members can see reservable tools, current availability, and actions from Slack.
 - [ ] Build the Slack one-tool availability view so members can inspect available ranges before reserving.
 - [ ] Build the Slack reservation flow so a member can reserve a tool for a valid local-time slot and receive a confirmation.
 - [ ] Build the Slack conflict flow so a member gets useful alternatives when the requested reservation time is unavailable.

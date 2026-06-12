@@ -13,6 +13,33 @@ make open-local
 
 The app runs at <http://localhost:8080>.
 
+## Slack Setup
+
+For local Slack testing:
+
+1. Create a Slack app.
+2. In **Basic Information > App-Level Tokens**, create an app-level token with `connections:write`.
+3. In **Socket Mode**, enable Socket Mode and select the app-level token.
+4. In **OAuth & Permissions**, add the bot token scopes needed for app mentions and replies:
+   - `app_mentions:read`
+   - `chat:write`
+5. In **Event Subscriptions**, enable events.
+   - Leave **Request URL** blank. Socket Mode does not use an HTTP request URL.
+   - Under **Subscribe to bot events**, add `app_mention`.
+   - Click **Save Changes** after adding the bot event.
+6. In **OAuth & Permissions**, install or reinstall the app to the workspace after changing scopes or event subscriptions.
+7. Invite the bot to any channel where you want to test it.
+8. Set these values in `.env`:
+
+```bash
+SLACK_BOT_TOKEN=xoxb-...
+SLACK_APP_TOKEN=xapp-...
+```
+
+`SLACK_BOT_TOKEN` must be the Bot User OAuth Token from **OAuth & Permissions** and should start with `xoxb-`. `SLACK_APP_TOKEN` must be the app-level token from **Basic Information** and should start with `xapp-`.
+
+The Docker app service sets `SLACK_SOCKET_MODE_CONNECT=true`, so Slack Socket Mode connects when both tokens are present. Mention the bot with `@bot ping` and it replies `pong`.
+
 ## Make Commands
 
 Run `make` to see the available development commands.
