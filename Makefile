@@ -1,4 +1,4 @@
-.PHONY: help setup db-up run routes test lint docker-build docker-up docker-down docker-config open-local
+.PHONY: help setup db-up migrate seed run routes test lint docker-build docker-up docker-down docker-config open-local
 
 VENV := .venv
 
@@ -11,6 +11,12 @@ setup: ## Create a local virtualenv and install development dependencies.
 
 db-up: ## Start only the MariaDB service.
 	docker compose up -d db
+
+migrate: ## Apply database migrations in the app container.
+	docker compose exec app flask --app toolbot:create_app db upgrade
+
+seed: ## Create or update local starter tool data.
+	docker compose exec app flask --app toolbot:create_app seed-tools
 
 run: ## Run the app and database with Docker Compose.
 	docker compose up

@@ -13,8 +13,8 @@ High-level feature tickets for fanning out Toolbot implementation work. Each ite
 
 ## 2. Admin And Setup
 
-- [ ] Build database migrations so Docker Compose environments can create and upgrade the MariaDB schema.
-- [ ] Build local seed data so contributors can start Docker Compose and immediately try sample tools and reservations.
+- [x] Build database migrations so Docker Compose environments can create and upgrade the MariaDB schema.
+- [x] Build seed data so contributors can start Docker Compose and immediately try sample tools.
 - [ ] Build the Slack admin action menu so admins can choose tool, reservation, and user-management actions.
 - [ ] Build the admin add-tool flow so admins can create a reservable tool with booking window, duration, granularity, and enabled settings.
 - [ ] Build the admin edit-tool flow so admins can update a tool's reservation settings without breaking existing history.
@@ -30,6 +30,10 @@ High-level feature tickets for fanning out Toolbot implementation work. Each ite
 - [ ] Build public empty and disabled-tool states so the site is useful when tools are missing, disabled, or fully booked.
 - [ ] Add enough CSS for the public pages to be usable on desktop and mobile.
 - [ ] Build basic operational visibility so maintainers can check app health, version/build info, and reservation/Slack failures.
+
+## Misc
+
+- [x] Add PR template
 
 ## Open Questions
 

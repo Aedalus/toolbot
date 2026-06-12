@@ -6,7 +6,7 @@ import os
 from flask import Flask, render_template
 
 from toolbot.config import config
-from toolbot.extensions import db
+from toolbot.extensions import db, migrate
 
 
 class HealthcheckLogFilter(logging.Filter):
@@ -31,6 +31,7 @@ def create_app(config_name="default"):
     configure_logging()
 
     db.init_app(app)
+    migrate.init_app(app, db)
 
     import toolbot.models  # noqa: F401
 
@@ -42,9 +43,46 @@ def create_app(config_name="default"):
     def health():
         return "ok"
 
+    _register_cli(app)
+
     if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
         from toolbot.slack import init_slack
 
         init_slack(app)
 
     return app
+
+
+def _register_cli(app):
+    """Register Flask CLI commands."""
+    import click
+
+    from toolbot.extensions import db as _db
+    from toolbot.models.tool import Tool
+
+    starter_tools = [
+        ("Bronte", "bronte", "The larger laser"),
+        ("Glowforge", "glowforge", "The smaller laser"),
+        ("Wood Lathes", "wood-lathes", "Reserve all lathes for a class."),
+    ]
+
+    @app.cli.command("seed-tools")
+    def seed_tools():
+        """Create or update starter tool records."""
+        created = 0
+        updated = 0
+
+        for name, slug, description in starter_tools:
+            tool = _db.session.execute(_db.select(Tool).filter_by(slug=slug)).scalar_one_or_none()
+            if tool is None:
+                _db.session.add(Tool(name=name, slug=slug, description=description))
+                created += 1
+                continue
+
+            if tool.name != name or tool.description != description:
+                tool.name = name
+                tool.description = description
+                updated += 1
+
+        _db.session.commit()
+        click.echo(f"Seeded starter tools: {created} created, {updated} updated.")
