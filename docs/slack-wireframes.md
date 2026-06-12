@@ -25,7 +25,7 @@ Most scheduling interactions are expected to start from the `#reservations` Slac
 Member types:
 
 ```text
-/tools
+@bot reserve
 ```
 
 Slack response:
@@ -139,7 +139,7 @@ If the time is unavailable:
 Member types:
 
 ```text
-/tools mine
+@bot mine
 ```
 
 Slack response:
@@ -195,7 +195,7 @@ After confirmation:
 Admin types:
 
 ```text
-/tools admin
+@bot admin
 ```
 
 Slack response:
@@ -250,7 +250,7 @@ If existing reservations are affected:
 Admin types:
 
 ```text
-/tools admin
+@bot admin
 ```
 
 Admin clicks `Add a tool`.
@@ -301,7 +301,7 @@ After submit:
 Admin types:
 
 ```text
-/tools admin
+@bot admin
 ```
 
 Admin clicks `Edit a tool`.
@@ -365,7 +365,7 @@ After submit:
 Admin types:
 
 ```text
-/tools admin
+@bot admin
 ```
 
 Admin clicks `Promote admin`.
@@ -427,12 +427,11 @@ The newly promoted admin receives a direct message:
 ## Notes
 
 - Recommended command entry points:
-  - `/tools`
-  - `/tools reserve`
-  - `/tools mine`
-  - `/tools admin`
+  - `@bot reserve`
+  - `@bot mine`
+  - `@bot admin`
 - Most scheduling interactions should happen in `#reservations`.
-- Slack interactions may use slash commands, buttons, and modals.
+- Slack interactions may use app mentions, buttons, and modals.
 - Slack requests should be verified before the system processes them.
 - Slack interactions should respond quickly. If an action takes longer, acknowledge it first and send a follow-up message.
 - Most member messages should be visible only to the member using Slack ephemeral messages or direct messages.

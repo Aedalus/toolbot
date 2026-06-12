@@ -29,6 +29,9 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL", "mysql+pymysql://root:toolbot@localhost/toolbot")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = build_engine_options(SQLALCHEMY_DATABASE_URI)
+    SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN", "")
+    SLACK_APP_TOKEN = os.environ.get("SLACK_APP_TOKEN", "")
+    SLACK_SOCKET_MODE_CONNECT = os.environ.get("SLACK_SOCKET_MODE_CONNECT", "")
 
 
 class DevelopmentConfig(Config):
@@ -45,6 +48,12 @@ class TestingConfig(Config):
     SQLALCHEMY_ENGINE_OPTIONS = build_engine_options(SQLALCHEMY_DATABASE_URI)
 
 
+class SlackTestConfig(TestingConfig):
+    """Configuration for testing the Slack Socket Mode connection path."""
+
+    TESTING = False
+
+
 class ProductionConfig(Config):
     """Production configuration."""
 
@@ -54,6 +63,7 @@ class ProductionConfig(Config):
 config = {
     "development": DevelopmentConfig,
     "testing": TestingConfig,
+    "slack_test": SlackTestConfig,
     "production": ProductionConfig,
     "default": DevelopmentConfig,
 }
